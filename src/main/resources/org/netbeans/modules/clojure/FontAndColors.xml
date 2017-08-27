@@ -1,0 +1,12 @@
+<!DOCTYPE fontscolors PUBLIC "-//NetBeans//DTD Editor Fonts and Colors settings 1.1//EN" "http://www.netbeans.org/dtds/EditorFontsColors-1_1.dtd">
+<fontscolors>
+    <fontcolor name="comment" default="comment" foreColor="FF969696"/>
+    <fontcolor name="builtin" default="red"/>
+    <fontcolor name="character" default="character" foreColor="FF7A1313"/>
+    <fontcolor name="string" default="string"/>
+    <fontcolor name="atom" default="atom" foreColor="0000E6"/>
+    <fontcolor name="number" default="number" foreColor="black"/>
+    <fontcolor name="bracket" default="bracket" foreColor="FF949494"/>
+    <fontcolor name="keyword" foreColor="FF669933"/>
+    <fontcolor name="var" default="var"/>
+</fontscolors>

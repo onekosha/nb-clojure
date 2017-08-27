@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.netbeans.modules.clojure.org.netbeans.modules.clojure">
+    <module_version install_time="1489252441480" last="true" origin="installer" specification_version="1.0">
+        <file crc="1925721067" name="config/Modules/org-netbeans-modules-clojure-org-netbeans-modules-clojure.xml"/>
+        <file crc="2160163656" name="modules/org-netbeans-modules-clojure-org-netbeans-modules-clojure-kit.jar"/>
+        <file crc="2497675024" name="update_tracking/org-netbeans-modules-clojure-org-netbeans-modules-clojure.xml"/>
+    </module_version>
+</module>
