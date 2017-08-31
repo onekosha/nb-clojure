@@ -3,6 +3,7 @@ package org.netbeans.modules.clojure.lexer;
 import org.netbeans.api.lexer.Token;
 import org.netbeans.spi.lexer.Lexer;
 import org.netbeans.spi.lexer.LexerRestartInfo;
+import src.main.antlr4.ClojureLexer;
 
 class ClojureNBLexer implements Lexer<ClojureTokenId> {
 
