@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Sandy Corn.
+ * Copyright 2018 delivery.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,71 +23,64 @@ import org.netbeans.spi.options.OptionsPanelController;
 import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
 
-@OptionsPanelController.TopLevelRegistration(
-        categoryName = "#OptionsCategory_Name_ClojureOptions",
-        iconBase = "org/netbeans/modules/clojure/clojure32.png",
-        keywords = "#OptionsCategory_Keywords_ClojureOptions",
-        keywordsCategory = "ClojureOptions"
+@OptionsPanelController.SubRegistration(
+        displayName = "#AdvancedOption_DisplayName_Clojure",
+        keywords = "#AdvancedOption_Keywords_Clojure",
+        keywordsCategory = "Advanced/Clojure"
 )
-@org.openide.util.NbBundle.Messages({"OptionsCategory_Name_ClojureOptions=Clojure", "OptionsCategory_Keywords_ClojureOptions=Clojure keywords"})
-public final class ClojureOptionsOptionsPanelController extends OptionsPanelController {
+@org.openide.util.NbBundle.Messages({"AdvancedOption_DisplayName_Clojure=Clojure", "AdvancedOption_Keywords_Clojure=Clojure 2 Keywords"})
+public final class ClojureOptionsPanelController extends OptionsPanelController {
 
-    private ClojureOptionsPanel panel;
+    private ClojurePanel panel;
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private boolean changed;
 
-    @Override
     public void update() {
         getPanel().load();
         changed = false;
     }
 
-    @Override
     public void applyChanges() {
-        SwingUtilities.invokeLater(() -> {
-            getPanel().store();
-            changed = false;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                getPanel().store();
+                changed = false;
+            }
         });
     }
 
-    @Override
     public void cancel() {
         // need not do anything special, if no changes have been persisted yet
     }
 
-    @Override
     public boolean isValid() {
         return getPanel().valid();
     }
 
-    @Override
     public boolean isChanged() {
         return changed;
     }
 
-    @Override
     public HelpCtx getHelpCtx() {
         return null; // new HelpCtx("...ID") if you have a help set
     }
 
-    @Override
     public JComponent getComponent(Lookup masterLookup) {
         return getPanel();
     }
 
-    @Override
     public void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
-    @Override
     public void removePropertyChangeListener(PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
 
-    private ClojureOptionsPanel getPanel() {
+    private ClojurePanel getPanel() {
         if (panel == null) {
-            panel = new ClojureOptionsPanel(this);
+            panel = new ClojurePanel(this);
         }
         return panel;
     }

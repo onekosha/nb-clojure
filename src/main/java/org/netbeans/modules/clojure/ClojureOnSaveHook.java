@@ -9,27 +9,27 @@ import org.netbeans.api.extexecution.ExecutionDescriptor;
 import org.netbeans.api.extexecution.ExecutionService;
 import org.netbeans.api.extexecution.ExternalProcessBuilder;
 import org.netbeans.spi.editor.document.OnSaveTask;
-import org.netbeans.modules.clojure.options.ClojureOptionsPanel;
+import org.netbeans.modules.clojure.options.ClojureOptionsPanelController;
 import org.openide.awt.StatusDisplayer;
 import org.openide.filesystems.FileObject;
 import org.openide.loaders.DataObject;
 import org.openide.util.Exceptions;
 import org.openide.util.NbPreferences;
 
-public class JSOnSaveHook implements OnSaveTask {
+public class ClojureOnSaveHook implements OnSaveTask {
 
     private final Document document;
 
     private final AtomicBoolean canceled = new AtomicBoolean();
 
-    public JSOnSaveHook(Document doc) {
+    public ClojureOnSaveHook(Document doc) {
         this.document = doc;
     }
 
     @Override
     public void performTask() {
         StatusDisplayer.getDefault().setStatusText("Transpile to Clojure...",10);
-        String tscPath = NbPreferences.forModule(ClojureOptionsPanel.class).get("tscPath", "");
+        String tscPath = NbPreferences.forModule(ClojureOptionsPanelController.class).get("tscPath", "");
         execute(tscPath, getFileObject(document));
     }
 
@@ -88,7 +88,7 @@ public class JSOnSaveHook implements OnSaveTask {
     public static final class FactoryImpl implements Factory {
         @Override
         public OnSaveTask createTask(Context context) {
-            return new JSOnSaveHook(context.getDocument());
+            return new ClojureOnSaveHook(context.getDocument());
         }
     }
 

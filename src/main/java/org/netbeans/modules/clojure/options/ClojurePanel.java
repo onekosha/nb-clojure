@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Sandy Corn.
+ * Copyright 2018 delivery.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,11 @@
  */
 package org.netbeans.modules.clojure.options;
 
-public final class ClojureOptionsPanel extends javax.swing.JPanel {
+final class ClojurePanel extends javax.swing.JPanel {
 
-    private final ClojureOptionsOptionsPanelController controller;
+    private final ClojureOptionsPanelController controller;
 
-    ClojureOptionsPanel(ClojureOptionsOptionsPanelController controller) {
+    ClojurePanel(ClojureOptionsPanelController controller) {
         this.controller = controller;
         initComponents();
         // TODO listen to changes in form fields and call controller.changed()
@@ -48,9 +48,9 @@ public final class ClojureOptionsPanel extends javax.swing.JPanel {
     void load() {
         // TODO read settings and initialize GUI
         // Example:        
-        // someCheckBox.setSelected(Preferences.userNodeForPackage(ClojureOptionsPanel.class).getBoolean("someFlag", false));
+        // someCheckBox.setSelected(Preferences.userNodeForPackage(ClojurePanel.class).getBoolean("someFlag", false));
         // or for org.openide.util with API spec. version >= 7.4:
-        // someCheckBox.setSelected(NbPreferences.forModule(ClojureOptionsPanel.class).getBoolean("someFlag", false));
+        // someCheckBox.setSelected(NbPreferences.forModule(ClojurePanel.class).getBoolean("someFlag", false));
         // or:
         // someTextField.setText(SomeSystemOption.getDefault().getSomeStringProperty());
     }
@@ -58,9 +58,9 @@ public final class ClojureOptionsPanel extends javax.swing.JPanel {
     void store() {
         // TODO store modified settings
         // Example:
-        // Preferences.userNodeForPackage(ClojureOptionsPanel.class).putBoolean("someFlag", someCheckBox.isSelected());
+        // Preferences.userNodeForPackage(ClojurePanel.class).putBoolean("someFlag", someCheckBox.isSelected());
         // or for org.openide.util with API spec. version >= 7.4:
-        // NbPreferences.forModule(ClojureOptionsPanel.class).putBoolean("someFlag", someCheckBox.isSelected());
+        // NbPreferences.forModule(ClojurePanel.class).putBoolean("someFlag", someCheckBox.isSelected());
         // or:
         // SomeSystemOption.getDefault().setSomeStringProperty(someTextField.getText());
     }
