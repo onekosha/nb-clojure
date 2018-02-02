@@ -28,7 +28,7 @@ public class ClojureOnSaveHook implements OnSaveTask {
 
     @Override
     public void performTask() {
-        StatusDisplayer.getDefault().setStatusText("Transpile to Clojure...",10);
+        StatusDisplayer.getDefault().setStatusText("Transpile to Clojure...", 10);
         String tscPath = NbPreferences.forModule(ClojureOptionsPanelController.class).get("tscPath", "");
         execute(tscPath, getFileObject(document));
     }
@@ -53,10 +53,10 @@ public class ClojureOnSaveHook implements OnSaveTask {
         ExternalProcessBuilder processBuilder = new ExternalProcessBuilder(
                 tscPath)
                 //hardcoded:
-//                "C:\\Users\\gwieleng\\AppData\\Roaming\\npm\\tsc.cmd")
+                //                "C:\\Users\\gwieleng\\AppData\\Roaming\\npm\\tsc.cmd")
                 .addArgument("--sourcemap")
                 .addArgument(fo.getPath());
-                //based on the code below, keeping it for inspiration:
+        //based on the code below, keeping it for inspiration:
 //        ExternalProcessBuilder processBuilder = new ExternalProcessBuilder(path)
 //                .addArgument("-o").addArgument(fo.getParent().getPath() + "/" + fo.getName() + ".dart.js")
 //                .addArgument("--minify")
@@ -86,6 +86,7 @@ public class ClojureOnSaveHook implements OnSaveTask {
 
     @MimeRegistration(mimeType = "text/x-clojure", service = OnSaveTask.Factory.class, position = 1)
     public static final class FactoryImpl implements Factory {
+
         @Override
         public OnSaveTask createTask(Context context) {
             return new ClojureOnSaveHook(context.getDocument());

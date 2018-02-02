@@ -51,7 +51,172 @@ limitations under the License.
                     <author>Sandy Corn</author>
                     <descriptor>${module.description}</descriptor>
                     <!--<nbmBuildDir>../</nbmBuildDir>-->
+                    <nbmResources>
+                        <nbmResource>
+                            <directory>${project.build.directory}/generated-sources/clojure/180</directory>
+                            <targetPath>modules/clojure/180</targetPath>
+                            <includes>
+                                <include>*.jar</include>
+                            </includes>
+                        </nbmResource>
+                        <nbmResource>
+                            <directory>${project.build.directory}/generated-sources/clojure/190</directory>
+                            <targetPath>modules/clojure/190</targetPath>
+                            <includes>
+                                <include>*.jar</include>
+                            </includes>
+                        </nbmResource>
+                        <nbmResource>
+                            <directory>${project.build.directory}/generated-sources/clojure/dev</directory>
+                            <targetPath>modules/clojure/dev</targetPath>
+                            <includes>
+                                <include>*.jar</include>
+                            </includes>
+                        </nbmResource>
+                        <nbmResource>
+                            <directory>${project.build.directory}/generated-sources/clojure</directory>
+                            <targetPath>modules/clojure</targetPath>
+                            <includes>
+                                <include>*.bat</include>
+                            </includes>
+                        </nbmResource>
+                    </nbmResources>
                 </configuration>
+            </plugin>
+            <!--<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.10</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <artifactItems>
+                        <artifactItem>
+                            <groupId>org.clojure</groupId>
+                            <artifactId>clojure</artifactId>
+                            <version>1.8.0</version>
+                            <type>jar</type>
+                            <overWrite>true</overWrite>
+                            <outputDirectory>${project.build.directory}/generated-sources/clojure/180</outputDirectory>
+                        </artifactItem>
+                        <artifactItem>
+                            <groupId>org.clojure</groupId>
+                            <artifactId>clojure</artifactId>
+                            <version>1.8.0</version>
+                            <type>java-source</type>
+                            <overWrite>true</overWrite>
+                            <outputDirectory>${project.build.directory}/generated-sources/clojure/180</outputDirectory>
+                        </artifactItem>
+                        <artifactItem>
+                            <groupId>org.clojure</groupId>
+                            <artifactId>clojure</artifactId>
+                            <version>1.8.0</version>
+                            <type>javadoc</type>
+                            <overWrite>true</overWrite>
+                            <outputDirectory>${project.build.directory}/generated-sources/clojure/180</outputDirectory>
+                        </artifactItem>
+                        <artifactItem>
+                            <groupId>org.clojure</groupId>
+                            <artifactId>clojure</artifactId>
+                            <version>1.9.0</version>
+                            <type>jar</type>
+                            <overWrite>true</overWrite>
+                            <outputDirectory>${project.build.directory}/generated-sources/clojure/190</outputDirectory>
+                        </artifactItem>
+                        <artifactItem>
+                            <groupId>org.clojure</groupId>
+                            <artifactId>clojure</artifactId>
+                            <version>1.9.0</version>
+                            <type>java-source</type>
+                            <overWrite>true</overWrite>
+                            <outputDirectory>${project.build.directory}/generated-sources/clojure/190</outputDirectory>
+                        </artifactItem>
+                        <artifactItem>
+                            <groupId>org.clojure</groupId>
+                            <artifactId>clojure</artifactId>
+                            <version>1.9.0</version>
+                            <type>javadoc</type>
+                            <overWrite>true</overWrite>
+                            <outputDirectory>${project.build.directory}/generated-sources/clojure/190</outputDirectory>
+                        </artifactItem>
+                        <artifactItem>
+                            <groupId>org.clojure</groupId>
+                            <artifactId>clojure</artifactId>
+                            <version>1.10.0-alpha2</version>
+                            <type>jar</type>
+                            <overWrite>true</overWrite>
+                            <outputDirectory>${project.build.directory}/generated-sources/clojure/dev</outputDirectory>
+                        </artifactItem>
+                        <artifactItem>
+                            <groupId>org.clojure</groupId>
+                            <artifactId>clojure</artifactId>
+                            <version>1.10.0-alpha2</version>
+                            <type>java-source</type>
+                            <overWrite>true</overWrite>
+                            <outputDirectory>${project.build.directory}/generated-sources/clojure/dev</outputDirectory>
+                        </artifactItem>
+                        <artifactItem>
+                            <groupId>org.clojure</groupId>
+                            <artifactId>clojure</artifactId>
+                            <version>1.10.0-alpha2</version>
+                            <type>javadoc</type>
+                            <overWrite>true</overWrite>
+                            <outputDirectory>${project.build.directory}/generated-sources/clojure/dev</outputDirectory>
+                        </artifactItem>
+                    </artifactItems>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>wagon-maven-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-lein</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>download-single</goal>
+                        </goals>
+                        <configuration>
+                            <url>https://raw.githubusercontent.com/technomancy/leiningen/stable/bin</url>
+                            <fromFile>lein.bat</fromFile>
+                            <toDir>${project.build.directory}/generated-sources/clojure</toDir>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -79,6 +244,11 @@ limitations under the License.
                 <version>3.0.2</version>
                 <configuration>
                     <encoding>${project.build.sourceEncoding}</encoding>
+                    <resources>
+                        <resources>
+                            <directory>src/main/resources</directory>
+                        </resources>
+                    </resources>
                 </configuration>
             </plugin>
             <plugin>
@@ -115,6 +285,9 @@ limitations under the License.
             <id>clojars.org</id>
             <name>Repository hosting Clojure's files</name>
             <url>http://clojars.org/repo</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
     </repositories>
     <dependencies>
