@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 dragon.
+ * Copyright 2018 Sandy Corn.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,91 +50,52 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-// TODO define position attribute
 @TemplateRegistrations({
-    // Clojure Application on Leiningen
-    @TemplateRegistration(
-            folder = "Project/Clojure",
-            displayName = "#ClojureApplicationTemplate_displayName",
-            description = "ClojureApplicationDescription.html",
-            iconBase = "org/netbeans/modules/clojure/leiningen16.png",
-            content = "ClojureApplicationTemplate.zip"),
-    
-    // Clojure Application with Java code on Maven
-    @TemplateRegistration(folder = "Project/Clojure",
-            displayName = "#ClojureJavaApplicationTemplate_displayName",
-            description = "ClojureJavaApplicationDescription.html",
-            iconBase = "org/netbeans/modules/clojure/clojure16.png",
-            content = "ClojureJavaApplicationTemplate.zip"),
+    @TemplateRegistration(folder = "Project/Clojure", displayName = "#Leiningen_App", description = "LeiningenAppDescription.html", iconBase = "org/netbeans/modules/clojure/templates/leiningen-clojure-projects.png", content = "leiningen-application.zip"),
+    @TemplateRegistration(folder = "Project/Clojure", displayName = "#Leiningen_Lib", description = "LeiningenLibDescription.html", iconBase = "org/netbeans/modules/clojure/templates/leiningen-clojure-projects.png", content = "leiningen-default.zip"),
+    @TemplateRegistration(folder = "Project/Clojure", displayName = "#Leiningen_Plugin", description = "LeiningenPluginDescription.html", iconBase = "org/netbeans/modules/clojure/templates/leiningen-clojure-projects.png", content = "leiningen-plugin.zip"),
+    @TemplateRegistration(folder = "Project/Clojure", displayName = "#Leiningen_Template", description = "LeiningenTemplateDescription.html", iconBase = "org/netbeans/modules/clojure/templates/leiningen-clojure-projects.png", content = "leiningen-template.zip")
+})
+// TODO define position attribute
 
-    // Clojure Library on Leiningen
-    @TemplateRegistration(folder = "Project/Clojure",
-            displayName = "#ClojureLibraryTemplate_displayName",
-            description = "ClojureLibraryDescription.html",
-            iconBase = "org/netbeans/modules/clojure/leiningen16.png",
-            content = "ClojureLibraryTemplate.zip"),
-    
-    // Clojure Plugin on Leiningen
-    @TemplateRegistration(folder = "Project/Clojure",
-            displayName = "#ClojurePluginTemplate_displayName",
-            description = "ClojurePluginDescription.html",
-            iconBase = "org/netbeans/modules/clojure/leiningen16.png",
-            content = "ClojurePluginTemplate.zip"),
-    
-    // Clojure Template on Leiningen
-    @TemplateRegistration(folder = "Project/Clojure",
-            displayName = "#ClojureTemplateTemplate_displayName",
-            description = "ClojureTemplateDescription.html",
-            iconBase = "org/netbeans/modules/clojure/leiningen16.png",
-            content = "ClojureTemplateTemplate.zip"),
-    
-    // Java Application with Clojure code on Maven
-    @TemplateRegistration(folder = "Project/Clojure",
-            displayName = "#JavaClojureApplicationTemplate_displayName",
-            description = "JavaClojureApplicationDescription.html",
-            iconBase = "org/netbeans/modules/clojure/jaricon.png",
-            content = "JavaClojureApplicationTemplate.zip")
-})
-@Messages({"ClojureApplicationTemplate_displayName=Clojure Application",
-    "ClojureJavaApplicationTemplate_displayName=Clojure Application with Java code",
-    "ClojureLibraryTemplate_displayName=Clojure Library",
-    "ClojurePluginTemplate_displayName=Clojure Plugin",
-    "ClojureTemplateTemplate_displayName=Clojure Template",
-    "JavaClojureApplicationTemplate_displayName=Java Application with Clojure code"
-})
-public class ClojureTemplateWizardIterator implements WizardDescriptor./*Progress*/InstantiatingIterator {
+@Messages({"Leiningen_App=Clojure Application by Lieningen",
+"Leiningen_Lib=Clojure Library by Leiningen",
+"Leiningen_Plugin=Leiningen Plugin",
+"Leiningen_Template=Leiningen Template"})
+public class LeiningenWizardIterator implements WizardDescriptor./*Progress*/InstantiatingIterator {
 
     private int index;
     private WizardDescriptor.Panel[] panels;
     private WizardDescriptor wiz;
 
-    public ClojureTemplateWizardIterator() {
+    public LeiningenWizardIterator() {
     }
 
-    public static ClojureTemplateWizardIterator createIterator() {
-        return new ClojureTemplateWizardIterator();
+    public static LeiningenWizardIterator createIterator() {
+        return new LeiningenWizardIterator();
     }
 
     private WizardDescriptor.Panel[] createPanels() {
         return new WizardDescriptor.Panel[]{
-            new ClojureTemplateWizardPanel(),};
+            new LeiningenWizardPanel(),};
     }
 
     private String[] createSteps() {
         return new String[]{
-            NbBundle.getMessage(ClojureTemplateWizardIterator.class, "LBL_CreateProjectStep")
+            NbBundle.getMessage(LeiningenWizardIterator.class, "LBL_CreateProjectStep")
         };
     }
 
     @Override
     public Set/*<FileObject>*/ instantiate(/*ProgressHandle handle*/) throws IOException {
-        Set<FileObject> resultSet = new LinkedHashSet<>();
+        Set<FileObject> resultSet = new LinkedHashSet<FileObject>();
         File dirF = FileUtil.normalizeFile((File) wiz.getProperty("projdir"));
         dirF.mkdirs();
 
         FileObject template = Templates.getTemplate(wiz);
         FileObject dir = FileUtil.toFileObject(dirF);
         unZipFile(template.getInputStream(), dir);
+        //executeLeinigenCommandFile(dirF);
 
         // Always open top dir as a project:
         resultSet.add(dir);
@@ -174,7 +135,7 @@ public class ClojureTemplateWizardIterator implements WizardDescriptor./*Progres
                 JComponent jc = (JComponent) c;
                 // Step #.
                 // TODO if using org.openide.dialogs >= 7.8, can use WizardDescriptor.PROP_*:
-                jc.putClientProperty("WizardPanel_contentSelectedIndex", i);
+                jc.putClientProperty("WizardPanel_contentSelectedIndex", new Integer(i));
                 // Step name (actually the whole list for reference).
                 jc.putClientProperty("WizardPanel_contentData", steps);
             }
@@ -192,7 +153,7 @@ public class ClojureTemplateWizardIterator implements WizardDescriptor./*Progres
     @Override
     public String name() {
         return MessageFormat.format("{0} of {1}",
-                new Object[]{index + 1, panels.length});
+                new Object[]{new Integer(index + 1), new Integer(panels.length)});
     }
 
     @Override
@@ -290,5 +251,37 @@ public class ClojureTemplateWizardIterator implements WizardDescriptor./*Progres
         }
 
     }
+
+//    private void executeLeinigenCommandFile(File executingPath) throws IOException {
+//        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//        String os = System.getProperty("os.name");
+//        String pathToLeinigenCommandFile = "";
+//        switch (os) {
+//            case "Windows 10":
+//                pathToLeinigenCommandFile = java.nio.file.Paths.get(System.getProperty("user.home"), "AppData", "Roaming", "Netbeans", "8.2", "modules", "clojure", "lein.bat").toString();
+//                break;
+//            case "Linux":
+//                pathToLeinigenCommandFile = "";
+//                break;
+//            case "MacOs":
+//                pathToLeinigenCommandFile = "";
+//                break;
+//            default:
+//                pathToLeinigenCommandFile = "";
+//                break;
+//        }
+//        
+////        Runtime rt = Runtime.getRuntime();
+//                String[] command = {pathToLeinigenCommandFile, "new", "app", "leiningen-priject"/*wiz.getProperty("name").toString()*/};
+//        ProcessBuilder builder = new ProcessBuilder(command);
+//        builder.directory(executingPath.getParentFile());
+//        Process pr = builder.start();
+//        
+////        try {
+////            rt.exec(command);
+////        } catch (IOException ex) {
+////            Exceptions.printStackTrace(ex);
+////        }
+//    }
 
 }

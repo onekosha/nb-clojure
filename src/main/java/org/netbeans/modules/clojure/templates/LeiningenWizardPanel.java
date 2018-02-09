@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Sandy Corn.
+ * Copyright 2018 Sandy Corn.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,45 +28,40 @@ import org.openide.util.NbBundle;
 /**
  * Panel just asking for basic info.
  */
-public class ClojureTemplateWizardPanel implements WizardDescriptor.Panel,
+public class LeiningenWizardPanel implements WizardDescriptor.Panel,
         WizardDescriptor.ValidatingPanel, WizardDescriptor.FinishablePanel {
 
     private WizardDescriptor wizardDescriptor;
-    private ClojureTemplatePanelVisual component;
+    private LeiningenPanelVisual component;
 
-    public ClojureTemplateWizardPanel() {
+    public LeiningenWizardPanel() {
     }
 
-    @Override
     public Component getComponent() {
         if (component == null) {
-            component = new ClojureTemplatePanelVisual(this);
-            component.setName(NbBundle.getMessage(ClojureTemplateWizardPanel.class, "LBL_CreateProjectStep"));
+            component = new LeiningenPanelVisual(this);
+            component.setName(NbBundle.getMessage(LeiningenWizardPanel.class, "LBL_CreateProjectStep"));
         }
         return component;
     }
 
-    @Override
     public HelpCtx getHelp() {
-        return new HelpCtx("org.netbeans.modules.clojure.templates.ClojureTemplateWizardPanel");
+        return new HelpCtx(LeiningenWizardPanel.class);
     }
 
-    @Override
     public boolean isValid() {
         getComponent();
         return component.valid(wizardDescriptor);
     }
 
-    private final Set<ChangeListener> listeners = new HashSet<>(1); // or can use ChangeSupport in NB 6.0
+    private final Set<ChangeListener> listeners = new HashSet<ChangeListener>(1); // or can use ChangeSupport in NB 6.0
 
-    @Override
     public final void addChangeListener(ChangeListener l) {
         synchronized (listeners) {
             listeners.add(l);
         }
     }
 
-    @Override
     public final void removeChangeListener(ChangeListener l) {
         synchronized (listeners) {
             listeners.remove(l);
@@ -76,32 +71,28 @@ public class ClojureTemplateWizardPanel implements WizardDescriptor.Panel,
     protected final void fireChangeEvent() {
         Set<ChangeListener> ls;
         synchronized (listeners) {
-            ls = new HashSet<>(listeners);
+            ls = new HashSet<ChangeListener>(listeners);
         }
         ChangeEvent ev = new ChangeEvent(this);
-        ls.forEach((l) -> {
+        for (ChangeListener l : ls) {
             l.stateChanged(ev);
-        });
+        }
     }
 
-    @Override
     public void readSettings(Object settings) {
         wizardDescriptor = (WizardDescriptor) settings;
         component.read(wizardDescriptor);
     }
 
-    @Override
     public void storeSettings(Object settings) {
         WizardDescriptor d = (WizardDescriptor) settings;
         component.store(d);
     }
 
-    @Override
     public boolean isFinishPanel() {
         return true;
     }
 
-    @Override
     public void validate() throws WizardValidationException {
         getComponent();
         component.validate(wizardDescriptor);

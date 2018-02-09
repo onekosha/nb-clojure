@@ -16,22 +16,26 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="projectNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="projectLocationLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="createdFolderLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="createdFilesLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="modifiedFilesLabel" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="modiliedFilesTextField" max="32767" attributes="0"/>
+                  <Component id="createdFilesTextField" max="32767" attributes="0"/>
                   <Component id="projectNameTextField" alignment="1" pref="191" max="32767" attributes="0"/>
                   <Component id="projectLocationTextField" alignment="1" pref="191" max="32767" attributes="0"/>
                   <Component id="createdFolderTextField" alignment="1" pref="191" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="browseButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -54,7 +58,17 @@
                   <Component id="createdFolderLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="createdFolderTextField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="213" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="createdFilesTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="createdFilesLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="modiliedFilesTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="modifiedFilesLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="145" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -66,7 +80,7 @@
           <ComponentRef name="projectNameTextField"/>
         </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="org/netbeans/modules/clojure/templates/Bundle.properties" key="ClojureTemplatePanelVisual.projectNameLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+          <ResourceString bundle="org/netbeans/modules/clojure/templates/Bundle.properties" key="LeiningenPanelVisual.projectNameLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
       </Properties>
       <AuxValues>
@@ -81,7 +95,7 @@
           <ComponentRef name="projectLocationTextField"/>
         </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="org/netbeans/modules/clojure/templates/Bundle.properties" key="ClojureTemplatePanelVisual.projectLocationLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+          <ResourceString bundle="org/netbeans/modules/clojure/templates/Bundle.properties" key="LeiningenPanelVisual.projectLocationLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
       </Properties>
       <AuxValues>
@@ -93,10 +107,10 @@
     <Component class="javax.swing.JButton" name="browseButton">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="org/netbeans/modules/clojure/templates/Bundle.properties" key="ClojureTemplatePanelVisual.browseButton.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+          <ResourceString bundle="org/netbeans/modules/clojure/templates/Bundle.properties" key="LeiningenPanelVisual.browseButton.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
         <Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="org/netbeans/modules/clojure/templates/Bundle.properties" key="ClojureTemplatePanelVisual.browseButton.actionCommand" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+          <ResourceString bundle="org/netbeans/modules/clojure/templates/Bundle.properties" key="LeiningenPanelVisual.browseButton.actionCommand" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
       </Properties>
       <Events>
@@ -109,13 +123,31 @@
           <ComponentRef name="createdFolderTextField"/>
         </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="org/netbeans/modules/clojure/templates/Bundle.properties" key="ClojureTemplatePanelVisual.createdFolderLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+          <ResourceString bundle="org/netbeans/modules/clojure/templates/Bundle.properties" key="LeiningenPanelVisual.createdFolderLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="createdFolderTextField">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="createdFilesTextField">
+    </Component>
+    <Component class="javax.swing.JTextField" name="modiliedFilesTextField">
+    </Component>
+    <Component class="javax.swing.JLabel" name="createdFilesLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="org/netbeans/modules/clojure/templates/Bundle.properties" key="LeiningenPanelVisual.createdFilesLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="modifiedFilesLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="org/netbeans/modules/clojure/templates/Bundle.properties" key="LeiningenPanelVisual.modifiedFilesLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+        </Property>
       </Properties>
     </Component>
   </SubComponents>

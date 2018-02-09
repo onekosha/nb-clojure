@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Sandy Corn.
+ * Copyright 2018 Sandy Corn.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,13 +26,13 @@ import org.openide.WizardDescriptor;
 import org.openide.WizardValidationException;
 import org.openide.filesystems.FileUtil;
 
-public class ClojureTemplatePanelVisual extends JPanel implements DocumentListener {
+public class LeiningenPanelVisual extends JPanel implements DocumentListener {
 
     public static final String PROP_PROJECT_NAME = "projectName";
 
-    private final ClojureTemplateWizardPanel panel;
+    private LeiningenWizardPanel panel;
 
-    public ClojureTemplatePanelVisual(ClojureTemplateWizardPanel panel) {
+    public LeiningenPanelVisual(LeiningenWizardPanel panel) {
         initComponents();
         this.panel = panel;
         // Register listener on the textFields to make the automatic updates
@@ -59,15 +59,19 @@ public class ClojureTemplatePanelVisual extends JPanel implements DocumentListen
         browseButton = new javax.swing.JButton();
         createdFolderLabel = new javax.swing.JLabel();
         createdFolderTextField = new javax.swing.JTextField();
+        createdFilesTextField = new javax.swing.JTextField();
+        modiliedFilesTextField = new javax.swing.JTextField();
+        createdFilesLabel = new javax.swing.JLabel();
+        modifiedFilesLabel = new javax.swing.JLabel();
 
         projectNameLabel.setLabelFor(projectNameTextField);
-        org.openide.awt.Mnemonics.setLocalizedText(projectNameLabel, org.openide.util.NbBundle.getMessage(ClojureTemplatePanelVisual.class, "ClojureTemplatePanelVisual.projectNameLabel.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(projectNameLabel, org.openide.util.NbBundle.getMessage(LeiningenPanelVisual.class, "LeiningenPanelVisual.projectNameLabel.text")); // NOI18N
 
         projectLocationLabel.setLabelFor(projectLocationTextField);
-        org.openide.awt.Mnemonics.setLocalizedText(projectLocationLabel, org.openide.util.NbBundle.getMessage(ClojureTemplatePanelVisual.class, "ClojureTemplatePanelVisual.projectLocationLabel.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(projectLocationLabel, org.openide.util.NbBundle.getMessage(LeiningenPanelVisual.class, "LeiningenPanelVisual.projectLocationLabel.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(browseButton, org.openide.util.NbBundle.getMessage(ClojureTemplatePanelVisual.class, "ClojureTemplatePanelVisual.browseButton.text")); // NOI18N
-        browseButton.setActionCommand(org.openide.util.NbBundle.getMessage(ClojureTemplatePanelVisual.class, "ClojureTemplatePanelVisual.browseButton.actionCommand")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(browseButton, org.openide.util.NbBundle.getMessage(LeiningenPanelVisual.class, "LeiningenPanelVisual.browseButton.text")); // NOI18N
+        browseButton.setActionCommand(org.openide.util.NbBundle.getMessage(LeiningenPanelVisual.class, "LeiningenPanelVisual.browseButton.actionCommand")); // NOI18N
         browseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 browseButtonActionPerformed(evt);
@@ -75,9 +79,13 @@ public class ClojureTemplatePanelVisual extends JPanel implements DocumentListen
         });
 
         createdFolderLabel.setLabelFor(createdFolderTextField);
-        org.openide.awt.Mnemonics.setLocalizedText(createdFolderLabel, org.openide.util.NbBundle.getMessage(ClojureTemplatePanelVisual.class, "ClojureTemplatePanelVisual.createdFolderLabel.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(createdFolderLabel, org.openide.util.NbBundle.getMessage(LeiningenPanelVisual.class, "LeiningenPanelVisual.createdFolderLabel.text")); // NOI18N
 
         createdFolderTextField.setEditable(false);
+
+        org.openide.awt.Mnemonics.setLocalizedText(createdFilesLabel, org.openide.util.NbBundle.getMessage(LeiningenPanelVisual.class, "LeiningenPanelVisual.createdFilesLabel.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(modifiedFilesLabel, org.openide.util.NbBundle.getMessage(LeiningenPanelVisual.class, "LeiningenPanelVisual.modifiedFilesLabel.text")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -88,9 +96,13 @@ public class ClojureTemplatePanelVisual extends JPanel implements DocumentListen
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(projectNameLabel)
                     .addComponent(projectLocationLabel)
-                    .addComponent(createdFolderLabel))
+                    .addComponent(createdFolderLabel)
+                    .addComponent(createdFilesLabel)
+                    .addComponent(modifiedFilesLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(modiliedFilesTextField)
+                    .addComponent(createdFilesTextField)
                     .addComponent(projectNameTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
                     .addComponent(projectLocationTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
                     .addComponent(createdFolderTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
@@ -114,7 +126,15 @@ public class ClojureTemplatePanelVisual extends JPanel implements DocumentListen
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(createdFolderLabel)
                     .addComponent(createdFolderTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(213, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(createdFilesTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(createdFilesLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(modiliedFilesTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(modifiedFilesLabel))
+                .addContainerGap(145, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -143,8 +163,12 @@ public class ClojureTemplatePanelVisual extends JPanel implements DocumentListen
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton browseButton;
+    private javax.swing.JLabel createdFilesLabel;
+    private javax.swing.JTextField createdFilesTextField;
     private javax.swing.JLabel createdFolderLabel;
     private javax.swing.JTextField createdFolderTextField;
+    private javax.swing.JLabel modifiedFilesLabel;
+    private javax.swing.JTextField modiliedFilesTextField;
     private javax.swing.JLabel projectLocationLabel;
     private javax.swing.JTextField projectLocationTextField;
     private javax.swing.JLabel projectNameLabel;
@@ -220,7 +244,7 @@ public class ClojureTemplatePanelVisual extends JPanel implements DocumentListen
 
         String projectName = (String) settings.getProperty("name");
         if (projectName == null) {
-            projectName = "ClojureProjectTemplate";
+            projectName = "leiningen-project";
         }
         this.projectNameTextField.setText(projectName);
         this.projectNameTextField.selectAll();
@@ -231,7 +255,6 @@ public class ClojureTemplatePanelVisual extends JPanel implements DocumentListen
     }
 
     // Implementation of DocumentListener --------------------------------------
-    @Override
     public void changedUpdate(DocumentEvent e) {
         updateTexts(e);
         if (this.projectNameTextField.getDocument() == e.getDocument()) {
@@ -239,7 +262,6 @@ public class ClojureTemplatePanelVisual extends JPanel implements DocumentListen
         }
     }
 
-    @Override
     public void insertUpdate(DocumentEvent e) {
         updateTexts(e);
         if (this.projectNameTextField.getDocument() == e.getDocument()) {
@@ -247,7 +269,6 @@ public class ClojureTemplatePanelVisual extends JPanel implements DocumentListen
         }
     }
 
-    @Override
     public void removeUpdate(DocumentEvent e) {
         updateTexts(e);
         if (this.projectNameTextField.getDocument() == e.getDocument()) {
