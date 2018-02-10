@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.netbeans.modules.clojure.templates;
+package org.netbeans.modules.clojure.samples;
 
 import java.awt.Component;
 import java.io.ByteArrayInputStream;
@@ -33,7 +33,6 @@ import javax.swing.JComponent;
 import javax.swing.event.ChangeListener;
 import org.netbeans.api.project.ProjectManager;
 import org.netbeans.api.templates.TemplateRegistration;
-import org.netbeans.api.templates.TemplateRegistrations;
 import org.netbeans.spi.project.ui.support.ProjectChooser;
 import org.netbeans.spi.project.ui.templates.support.Templates;
 import org.openide.WizardDescriptor;
@@ -50,39 +49,30 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-@TemplateRegistrations({
-    @TemplateRegistration(folder = "Project/Clojure", displayName = "#Leiningen_App", description = "LeiningenAppDescription.html", iconBase = "org/netbeans/modules/clojure/templates/leiningen-projects.png", content = "leiningen-application.zip"),
-    @TemplateRegistration(folder = "Project/Clojure", displayName = "#Leiningen_Lib", description = "LeiningenLibDescription.html", iconBase = "org/netbeans/modules/clojure/templates/leiningen-projects.png", content = "leiningen-default.zip"),
-    @TemplateRegistration(folder = "Project/Clojure", displayName = "#Leiningen_Plugin", description = "LeiningenPluginDescription.html", iconBase = "org/netbeans/modules/clojure/templates/leiningen-projects.png", content = "leiningen-plugin.zip"),
-    @TemplateRegistration(folder = "Project/Clojure", displayName = "#Leiningen_Template", description = "LeiningenTemplateDescription.html", iconBase = "org/netbeans/modules/clojure/templates/leiningen-projects.png", content = "leiningen-template.zip")
-})
 // TODO define position attribute
-
-@Messages({"Leiningen_App=Clojure Application by Lieningen",
-"Leiningen_Lib=Clojure Library by Leiningen",
-"Leiningen_Plugin=Leiningen Plugin",
-"Leiningen_Template=Leiningen Template"})
-public class LeiningenWizardIterator implements WizardDescriptor./*Progress*/InstantiatingIterator {
+@TemplateRegistration(folder = "Project/Samples/Maven", displayName = "#Histogram_displayName", description = "HistogramDescription.html", iconBase = "org/netbeans/modules/clojure/samples/histogram.png", content = "HistogramProject.zip")
+@Messages("Histogram_displayName=Histogram")
+public class SamplesWizardIterator implements WizardDescriptor./*Progress*/InstantiatingIterator {
 
     private int index;
     private WizardDescriptor.Panel[] panels;
     private WizardDescriptor wiz;
 
-    public LeiningenWizardIterator() {
+    public SamplesWizardIterator() {
     }
 
-    public static LeiningenWizardIterator createIterator() {
-        return new LeiningenWizardIterator();
+    public static SamplesWizardIterator createIterator() {
+        return new SamplesWizardIterator();
     }
 
     private WizardDescriptor.Panel[] createPanels() {
         return new WizardDescriptor.Panel[]{
-            new LeiningenWizardPanel(),};
+            new SamplesWizardPanel(),};
     }
 
     private String[] createSteps() {
         return new String[]{
-            NbBundle.getMessage(LeiningenWizardIterator.class, "LBL_CreateProjectStep")
+            NbBundle.getMessage(SamplesWizardIterator.class, "LBL_CreateProjectStep")
         };
     }
 
@@ -95,7 +85,6 @@ public class LeiningenWizardIterator implements WizardDescriptor./*Progress*/Ins
         FileObject template = Templates.getTemplate(wiz);
         FileObject dir = FileUtil.toFileObject(dirF);
         unZipFile(template.getInputStream(), dir);
-        //executeLeinigenCommandFile(dirF);
 
         // Always open top dir as a project:
         resultSet.add(dir);
@@ -251,37 +240,5 @@ public class LeiningenWizardIterator implements WizardDescriptor./*Progress*/Ins
         }
 
     }
-
-//    private void executeLeinigenCommandFile(File executingPath) throws IOException {
-//        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//        String os = System.getProperty("os.name");
-//        String pathToLeinigenCommandFile = "";
-//        switch (os) {
-//            case "Windows 10":
-//                pathToLeinigenCommandFile = java.nio.file.Paths.get(System.getProperty("user.home"), "AppData", "Roaming", "Netbeans", "8.2", "modules", "clojure", "lein.bat").toString();
-//                break;
-//            case "Linux":
-//                pathToLeinigenCommandFile = "";
-//                break;
-//            case "MacOs":
-//                pathToLeinigenCommandFile = "";
-//                break;
-//            default:
-//                pathToLeinigenCommandFile = "";
-//                break;
-//        }
-//        
-////        Runtime rt = Runtime.getRuntime();
-//                String[] command = {pathToLeinigenCommandFile, "new", "app", "leiningen-priject"/*wiz.getProperty("name").toString()*/};
-//        ProcessBuilder builder = new ProcessBuilder(command);
-//        builder.directory(executingPath.getParentFile());
-//        Process pr = builder.start();
-//        
-////        try {
-////            rt.exec(command);
-////        } catch (IOException ex) {
-////            Exceptions.printStackTrace(ex);
-////        }
-//    }
 
 }
