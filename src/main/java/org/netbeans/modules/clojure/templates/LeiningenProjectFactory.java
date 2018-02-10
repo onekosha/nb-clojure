@@ -24,7 +24,7 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
- * @author <a href="mailto:onekosha@gmail.com">Sandy Corn</a>
+ * @author Sandy Corn
  */
 @ServiceProvider(service=ProjectFactory.class)
 public class LeiningenProjectFactory implements ProjectFactory {

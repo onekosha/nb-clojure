@@ -21,7 +21,7 @@ limitations under the License.
     <url>https://www.github.com/onekosha/nb-clojure</url>
     <groupId>org.netbeans.modules</groupId>
     <artifactId>clojure</artifactId>
-    <version>0.14-SNAPSHOT</version>
+    <version>0.15-SNAPSHOT</version>
     <packaging>nbm</packaging>
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>

@@ -17,6 +17,7 @@ package org.netbeans.modules.clojure.templates;
 
 import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import org.netbeans.api.annotations.common.StaticResource;
@@ -76,7 +77,7 @@ class LeiningenProjectLogicalView implements LogicalViewProvider {
     private final class ProjectNode extends FilterNode {
 
         final LeiningenProject project;
-
+        
         public ProjectNode(Node node, LeiningenProject project)
                 throws DataObjectNotFoundException {
             super(node,
@@ -115,13 +116,15 @@ class LeiningenProjectLogicalView implements LogicalViewProvider {
             return project.getProjectDirectory().getName();
         }
 
+        
+
     }
 
     private static class ProjectAction extends AbstractAction {
 
         private final LeiningenProject project;
         private final String command;
-
+        
         public ProjectAction(String cmd, String displayName, LeiningenProject prj) {
             super(displayName);
             this.project = prj;
@@ -131,15 +134,16 @@ class LeiningenProjectLogicalView implements LogicalViewProvider {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             if (command.equals(COMMAND_RUN)) {
-                processCommand("run");
+                processCommand("jar");
             } else {
                 throw new IllegalArgumentException(String.format("Invalid command %s", command));
             }
         }
 
         private void processCommand(String command) {
-            ExternalProcessBuilder processBuilder = new ExternalProcessBuilder("lein").
+            ExternalProcessBuilder processBuilder = new ExternalProcessBuilder(project.fullNameLeiningenFile).
                     addArgument(command).
+                    prependPath(new File(project.leiningenDirectory)).
                     workingDirectory(FileUtil.toFile(project.getProjectDirectory()));
             ExecutionDescriptor descriptor = new ExecutionDescriptor().
                     frontWindow(true).

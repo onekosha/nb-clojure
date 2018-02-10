@@ -29,17 +29,21 @@ import org.openide.util.lookup.Lookups;
 
 /**
  *
- * @author Sandy Corn <a>onekosha at gmail.com></a>
+ * @author Sandy Corn
  */
 public class LeiningenProject implements Project {
 
     private final FileObject projectDir;
     private final ProjectState state;
     private Lookup lkp;
+    final String leiningenDirectory;
+    final String fullNameLeiningenFile;
 
     LeiningenProject(FileObject dir, ProjectState state) {
         this.projectDir = dir;
         this.state = state;
+        this.fullNameLeiningenFile = getFullNameLeiningenFile();
+        this.leiningenDirectory = getLeiningenDirectory();
     }
 
     @Override
@@ -57,6 +61,44 @@ public class LeiningenProject implements Project {
             );
         }
         return lkp;
+    }
+
+    private String getFullNameLeiningenFile() {
+        String os = System.getProperty("os.name");
+
+        if (os.contains("Windows")) {
+            os = "Windows";
+        }
+
+        switch (os) {
+            case "Windows":
+                return "lein.bat";
+            case "Linux":
+                return "lein";
+            case "MacOs":
+                return "lein";
+            default:
+                return "lein";
+        }
+    }
+
+    private String getLeiningenDirectory() {
+        String os = System.getProperty("os.name");
+
+        if (os.contains("Windows")) {
+            os = "Windows";
+        }
+
+        switch (os) {
+            case "Windows":
+                return java.nio.file.Paths.get(System.getProperty("user.home"), "AppData", "Roaming", "Netbeans", "8.2", "modules", "clojure").toString();
+            case "Linux":
+                return "";
+            case "MacOs":
+                return "";
+            default:
+                return "";
+        }
     }
 
     private final class LeiningenProjectInformation implements ProjectInformation {
