@@ -30,7 +30,7 @@ public class SamplesPanelVisual extends JPanel implements DocumentListener {
 
     public static final String PROP_PROJECT_NAME = "projectName";
 
-    private SamplesWizardPanel panel;
+    private final SamplesWizardPanel panel;
 
     public SamplesPanelVisual(SamplesWizardPanel panel) {
         initComponents();

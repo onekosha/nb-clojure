@@ -21,7 +21,7 @@ limitations under the License.
     <url>https://www.github.com/onekosha/nb-clojure</url>
     <groupId>org.netbeans.modules</groupId>
     <artifactId>clojure</artifactId>
-    <version>0.12-SNAPSHOT</version>
+    <version>0.14-SNAPSHOT</version>
     <packaging>nbm</packaging>
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>
@@ -183,7 +183,7 @@ limitations under the License.
                         <artifactItem>
                             <groupId>org.clojure</groupId>
                             <artifactId>clojure</artifactId>
-                            <version>1.10.0-alpha2</version>
+                            <version>1.10.0-alpha4</version>
                             <type>jar</type>
                             <overWrite>true</overWrite>
                             <outputDirectory>${project.build.directory}/generated-sources/clojure/dev</outputDirectory>
@@ -191,7 +191,7 @@ limitations under the License.
                         <artifactItem>
                             <groupId>org.clojure</groupId>
                             <artifactId>clojure</artifactId>
-                            <version>1.10.0-alpha2</version>
+                            <version>1.10.0-alpha4</version>
                             <type>java-source</type>
                             <overWrite>true</overWrite>
                             <outputDirectory>${project.build.directory}/generated-sources/clojure/dev</outputDirectory>
@@ -199,7 +199,7 @@ limitations under the License.
                         <artifactItem>
                             <groupId>org.clojure</groupId>
                             <artifactId>clojure</artifactId>
-                            <version>1.10.0-alpha2</version>
+                            <version>1.10.0-alpha4</version>
                             <type>javadoc</type>
                             <overWrite>true</overWrite>
                             <outputDirectory>${project.build.directory}/generated-sources/clojure/dev</outputDirectory>
