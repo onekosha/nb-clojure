@@ -24,7 +24,12 @@ import org.netbeans.api.annotations.common.StaticResource;
 import org.netbeans.api.extexecution.ExecutionDescriptor;
 import org.netbeans.api.extexecution.ExecutionService;
 import org.netbeans.api.extexecution.ExternalProcessBuilder;
+import static org.netbeans.modules.clojure.templates.LeiningenActionProvider.COMMAND_DEPS;
+import static org.netbeans.modules.clojure.templates.LeiningenActionProvider.COMMAND_HELP;
 import org.netbeans.spi.project.ActionProvider;
+import static org.netbeans.spi.project.ActionProvider.COMMAND_BUILD;
+import static org.netbeans.spi.project.ActionProvider.COMMAND_CLEAN;
+import static org.netbeans.spi.project.ActionProvider.COMMAND_REBUILD;
 import static org.netbeans.spi.project.ActionProvider.COMMAND_RUN;
 import org.netbeans.spi.project.ui.LogicalViewProvider;
 import org.netbeans.spi.project.ui.support.CommonProjectActions;
@@ -77,7 +82,7 @@ class LeiningenProjectLogicalView implements LogicalViewProvider {
     private final class ProjectNode extends FilterNode {
 
         final LeiningenProject project;
-        
+
         public ProjectNode(Node node, LeiningenProject project)
                 throws DataObjectNotFoundException {
             super(node,
@@ -94,10 +99,19 @@ class LeiningenProjectLogicalView implements LogicalViewProvider {
         public Action[] getActions(boolean arg0) {
             return new Action[]{
                 new ProjectAction(COMMAND_RUN, "Run", project),
+                null,
+                new ProjectAction(COMMAND_DEPS, "Deps", project),
+                new ProjectAction(COMMAND_BUILD, "JAR", project),
+                new ProjectAction(COMMAND_REBUILD, "Uber JAR", project),
+                null,
+                new ProjectAction(COMMAND_CLEAN, "Clean", project),
+                null,
+                CommonProjectActions.closeProjectAction(),
+                null,
+                new ProjectAction(COMMAND_HELP, "Help", project),
                 CommonProjectActions.newFileAction(),
                 CommonProjectActions.copyProjectAction(),
-                CommonProjectActions.deleteProjectAction(),
-                CommonProjectActions.closeProjectAction()
+                CommonProjectActions.deleteProjectAction()
             };
         }
 
@@ -116,15 +130,13 @@ class LeiningenProjectLogicalView implements LogicalViewProvider {
             return project.getProjectDirectory().getName();
         }
 
-        
-
     }
 
     private static class ProjectAction extends AbstractAction {
 
         private final LeiningenProject project;
         private final String command;
-        
+
         public ProjectAction(String cmd, String displayName, LeiningenProject prj) {
             super(displayName);
             this.project = prj;
@@ -133,10 +145,27 @@ class LeiningenProjectLogicalView implements LogicalViewProvider {
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            if (command.equals(COMMAND_RUN)) {
-                processCommand("jar");
-            } else {
-                throw new IllegalArgumentException(String.format("Invalid command %s", command));
+            switch (command) {
+                case COMMAND_RUN:
+                    processCommand("run");
+                    break;
+                case COMMAND_DEPS:
+                    processCommand("deps");
+                    break;
+                case COMMAND_CLEAN:
+                    processCommand("clean");
+                    break;
+                case COMMAND_BUILD:
+                    processCommand("jar");
+                    break;
+                case COMMAND_REBUILD:
+                    processCommand("uberjar");
+                    break;
+                case COMMAND_HELP:
+                    processCommand("help");
+                    break;
+                default:
+                    throw new IllegalArgumentException(String.format("Invalid command %s", command));
             }
         }
 

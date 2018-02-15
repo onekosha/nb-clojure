@@ -25,15 +25,18 @@ import org.openide.util.Lookup;
 public class LeiningenActionProvider implements ActionProvider {
     public static final String COMMAND_DEPS = "deps";
     public static final String COMMAND_HELP = "help";
+    public static final String COMMAND_UBERJAR = "uberjar";
 
     @Override
     public String[] getSupportedActions() {
         return new String[]{
-            ActionProvider.COMMAND_RUN/*,
+            ActionProvider.COMMAND_RUN,
+            null,
             COMMAND_DEPS,
             ActionProvider.COMMAND_BUILD,
+            COMMAND_UBERJAR,
             ActionProvider.COMMAND_CLEAN,
-            COMMAND_HELP*/
+            COMMAND_HELP
         };
     }
 

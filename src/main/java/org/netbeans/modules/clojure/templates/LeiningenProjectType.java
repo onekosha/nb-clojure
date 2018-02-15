@@ -27,7 +27,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Sandy Corn
  */
 @ServiceProvider(service=ProjectFactory.class)
-public class LeiningenProjectFactory implements ProjectFactory {
+public class LeiningenProjectType implements ProjectFactory {
     public static final String PROJECT_FILE = "project.clj";
 
     //Specifies when a project is a project, i.e.,
